@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="https://raw.githubusercontent.com/burnlang/burn/master/assets/logo.svg" alt="Burn logo" width="128">
+</p>
+
 # Burnfmt
 
 Burnfmt is a code formatter for the Burn programming language, similar to `gofmt` for Go.
@@ -10,6 +14,14 @@ Burnfmt is a code formatter for the Burn programming language, similar to `gofmt
 - Applies opinionated, consistent style rules automatically
 
 ## How it works
+
+The Burn toolchain installer ships `burnfmt`, a formatter written in Burn that produces the same output:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/burnlang/burn/master/install.sh | sh
+```
+
+This repository provides a Go build of the same command for environments that prefer `go install`.
 
 Burn has a formatter built into the compiler (`burn fmt`). Burnfmt is a small Go command that keeps the
 familiar `burnfmt` interface and runs `burn fmt` under the hood, so both always produce identical output.
