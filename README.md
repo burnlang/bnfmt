@@ -11,7 +11,7 @@ Burnfmt is a code formatter for the Burn programming language, similar to `gofmt
 
 ## How it works
 
-Burn 2 has a formatter built into the compiler (`burn fmt`). Burnfmt is a small Go command that keeps the
+Burn has a formatter built into the compiler (`burn fmt`). Burnfmt is a small Go command that keeps the
 familiar `burnfmt` interface and runs `burn fmt` under the hood, so both always produce identical output.
 Burnfmt looks for the `burn` executable in `$BURN_PATH`, next to its own binary, and on `$PATH`.
 
@@ -29,7 +29,7 @@ cd bnfmt
 go build -o burnfmt
 ```
 
-Burn 2 must be installed as well.
+Burn must be installed as well.
 
 ## Usage
 

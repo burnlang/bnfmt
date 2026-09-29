@@ -90,7 +90,7 @@ func findBurn() (string, error) {
 	if p, err := exec.LookPath(name); err == nil {
 		return p, nil
 	}
-	return "", errors.New("burnfmt: the `burn` executable was not found; install Burn 2 or set BURN_PATH")
+	return "", errors.New("burnfmt: the `burn` executable was not found; install Burn or set BURN_PATH")
 }
 
 func parseArgs(args []string) ([]string, map[string]bool) {
