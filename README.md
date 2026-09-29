@@ -9,42 +9,46 @@ Burnfmt is a code formatter for the Burn programming language, similar to `gofmt
 - Supports writing back to source files or standard output
 - Applies opinionated, consistent style rules automatically
 
+## How it works
+
+Burn has a formatter built into the compiler (`burn fmt`). Burnfmt is a small Go command that keeps the
+familiar `burnfmt` interface and runs `burn fmt` under the hood, so both always produce identical output.
+Burnfmt looks for the `burn` executable in `$BURN_PATH`, next to its own binary, and on `$PATH`.
+
 ## Installation
 
 ```sh
-# Build from source
-cd burnfmt
-go build -o burnfmt
-
-# Install globally (optional)
 go install github.com/burnlang/burnfmt@latest
 ```
+
+or build from source:
+
+```sh
+git clone https://github.com/burnlang/bnfmt.git
+cd bnfmt
+go build -o burnfmt
+```
+
+Burn must be installed as well.
 
 ## Usage
 
 ```sh
-# Format a file and print to stdout
-burnfmt file.bn
-
-# Format a file and write back to source
-burnfmt -w file.bn
-
-# Format multiple files
-burnfmt -w file1.bn file2.bn
-
-# Format from stdin
-cat file.bn | burnfmt
+burnfmt file.bn          # print formatted code
+burnfmt -w file.bn       # format in place
+burnfmt -l *.bn          # list files that are not formatted, exit code 1 if any
+cat file.bn | burnfmt    # format standard input
 ```
 
 ## Formatting Rules
 
-Burnfmt applies the following consistent formatting rules:
-
-- 2-space indentation
-- Proper spacing around operators and punctuation
-- Consistent brace placement
-- Logical grouping of declarations
-- Appropriate line breaks for readability
+- 4-space indentation based on block depth
+- One space around binary operators, after commas and colons, and before `{`
+- No space inside parentheses and brackets, or after unary `-` and `!`
+- A line that opens a block and continues is split after the `{`
+- A blank line between a closing `}` and the next declaration
+- Consecutive blank lines are collapsed into one
+- Comments and string contents are left untouched
 
 ## Integration
 
