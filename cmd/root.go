@@ -10,6 +10,9 @@ import (
 	"strings"
 )
 
+const deprecation = "burnfmt (Go) is deprecated: use the burnfmt that ships with Burn, installed by\n" +
+	"  curl -fsSL https://raw.githubusercontent.com/burnlang/burn/master/install.sh | sh"
+
 func Execute(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	files, options := parseArgs(args)
 
@@ -17,6 +20,8 @@ func Execute(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		printUsage(stdout)
 		return 0
 	}
+
+	fmt.Fprintln(stderr, deprecation)
 
 	if options["version"] {
 		fmt.Fprintf(stdout, "Burnfmt v%s\n", getVersion())
@@ -119,6 +124,9 @@ func parseArgs(args []string) ([]string, map[string]bool) {
 
 func printUsage(w io.Writer) {
 	fmt.Fprintln(w, "Burnfmt - A code formatter for the Burn programming language")
+	fmt.Fprintln(w, "")
+	fmt.Fprintln(w, deprecation)
+	fmt.Fprintln(w, "")
 	fmt.Fprintln(w, "Usage:")
 	fmt.Fprintln(w, "  burnfmt [options] [file...]")
 	fmt.Fprintln(w, "")
