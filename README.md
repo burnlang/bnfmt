@@ -40,4 +40,4 @@ It gets no new features or fixes.
 
 ## License
 
-[MIT License](LICENSE)
+[GNU General Public License v3.0](LICENSE)
