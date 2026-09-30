@@ -2,73 +2,41 @@
     <img src="https://raw.githubusercontent.com/burnlang/burn/master/assets/logo.svg" alt="Burn logo" width="128">
 </p>
 
-# Burnfmt
+# Burnfmt (Go, deprecated)
 
-Burnfmt is a code formatter for the Burn programming language, similar to `gofmt` for Go.
+> [!WARNING]
+> This Go build of `burnfmt` is deprecated and no longer maintained. Use the `burnfmt` that ships with Burn.
 
-## Features
-
-- Formats Burn code (.bn files) with consistent formatting
-- Can be used as a command-line tool or library
-- Supports writing back to source files or standard output
-- Applies opinionated, consistent style rules automatically
-
-## How it works
-
-The Burn toolchain installer ships `burnfmt`, a formatter written in Burn that produces the same output:
+The Burn toolchain installs `burnfmt`, a formatter written in Burn itself, next to `burn`, `burni` and `burnc`:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/burnlang/burn/master/install.sh | sh
 ```
 
-This repository provides a Go build of the same command for environments that prefer `go install`.
+It always matches the installed Burn version, so there is nothing extra to install or keep in sync.
 
-Burn has a formatter built into the compiler (`burn fmt`). Burnfmt is a small Go command that keeps the
-familiar `burnfmt` interface and runs `burn fmt` under the hood, so both always produce identical output.
-Burnfmt looks for the `burn` executable in `$BURN_PATH`, next to its own binary, and on `$PATH`.
+## Moving over
 
-## Installation
-
-```sh
-go install github.com/burnlang/burnfmt@latest
-```
-
-or build from source:
+1. Remove the Go build: `rm "$(go env GOPATH)/bin/burnfmt"`
+2. Install Burn with the command above, which puts `burnfmt` in `~/.burn/bin`
+3. Keep using the same commands:
 
 ```sh
-git clone https://github.com/burnlang/bnfmt.git
-cd bnfmt
-go build -o burnfmt
+burnfmt file.bn              # print the formatted file
+burnfmt -w file.bn           # format in place
+burnfmt --check src/*.bn     # list files that are not formatted, exit code 1 if any
+cat file.bn | burnfmt        # format standard input
 ```
 
-Burn must be installed as well.
+It accepts the same flags as the Go build (`-w`, `-l`/`--check`, `-h`, `-v`), so scripts and editor setups keep
+working. `burn fmt` does the same without a separate command.
 
-## Usage
+See the [burnfmt documentation](https://github.com/burnlang/burn/blob/master/docs/tooling/burnfmt.mdx) for details.
 
-```sh
-burnfmt file.bn          # print formatted code
-burnfmt -w file.bn       # format in place
-burnfmt -l *.bn          # list files that are not formatted, exit code 1 if any
-cat file.bn | burnfmt    # format standard input
-```
+## Existing installs
 
-## Formatting Rules
-
-- 4-space indentation based on block depth
-- One space around binary operators, after commas and colons, and before `{`
-- No space inside parentheses and brackets, or after unary `-` and `!`
-- A line that opens a block and continues is split after the `{`
-- A blank line between a closing `}` and the next declaration
-- Consecutive blank lines are collapsed into one
-- Comments and string contents are left untouched
-
-## Integration
-
-Add burnfmt to your workflow:
-
-- **Git pre-commit hook**: Ensure all committed code follows standard formatting
-- **CI/CD pipeline**: Verify formatting as part of automated tests
-- **Editor integration**: Configure with VS Code, Vim, or other editors
+The Go build still works: it runs `burn fmt` under the hood and prints a deprecation notice to standard error.
+It gets no new features or fixes.
 
 ## License
 
